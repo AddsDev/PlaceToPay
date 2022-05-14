@@ -1,6 +1,22 @@
 <resources>
-    <string name="app_name">PlaceToPay</string>
+    <!-- Generic -->
+    <string name="app_name">Place To Pay</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="understood">Entendido</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="add">Agregar</string>
+    <string name="remove">Eliminar</string>
+    <string name="continue_step">Continuar</string>
+
+    <!-- Home -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <!-- Shopping Cart -->
+    <string name="title_cart">Cart</string>
+    <string name="title_cart.title">Tu carrito de compras 🛍️</string>
+    <!-- Shopping Bag -->
+    <string name="title_shopping">Shopping</string>
+    <string name="total">Total: $</string>
+
 </resources>
