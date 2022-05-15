@@ -12,9 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PlaceToPay">
         <activity
-            android:name=".ui.order.OrderActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
