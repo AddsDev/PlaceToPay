@@ -16,6 +16,7 @@
     <string name="title_cart">Cart</string>
     <string name="title_cart.title">Tu carrito de compras 🛍️</string>
     <string name="total">Total: $</string>
+    <string name="order.title">Informacion de Pago</string>
     <string name="order.title.user">Informacion del Usuario</string>
     <string name="order.title.card">Foma de pago</string>
     <string name="order.shop">Pagar</string>
@@ -33,6 +34,5 @@
     <string name="card.cvv" translatable="false">CVV</string>
     <!-- Shopping Bag -->
     <string name="title_shopping">Shopping</string>
-
 
 </resources>
