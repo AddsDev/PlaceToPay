@@ -1,6 +1,38 @@
 <resources>
-    <string name="app_name">PlaceToPay</string>
+    <!-- Generic -->
+    <string name="app_name" translatable="false">Place To Pay</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="understood">Entendido</string>
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+    <string name="add">Agregar</string>
+    <string name="remove">Eliminar</string>
+    <string name="continue_step">Continuar</string>
+
+    <!-- Home -->
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <!-- Shopping Cart -->
+    <string name="title_cart">Cart</string>
+    <string name="title_cart.title">Tu carrito de compras 🛍️</string>
+    <string name="total">Total: $</string>
+    <string name="order.title">Informacion de Pago</string>
+    <string name="order.title.user">Informacion del Usuario</string>
+    <string name="order.title.card">Foma de pago</string>
+    <string name="order.shop">Pagar</string>
+    <string name="order.name">Nombre</string>
+    <string name="order.surname">Apellidos</string>
+    <string name="order.email">Email</string>
+    <string name="order.documentType">Tipo de documento</string>
+    <string name="order.document">Documento</string>
+    <string name="order.mobile">Celular</string>
+    <string name="card.number">Numero de tarjeta</string>
+    <string name="card.number.hint">1111 1111 1111 1111</string>
+    <string name="card.expiration">Fecha de expiracion</string>
+    <string name="card.expiration.month">Mes</string>
+    <string name="card.expiration.year">Año</string>
+    <string name="card.cvv" translatable="false">CVV</string>
+    <!-- Shopping Bag -->
+    <string name="title_shopping">Shopping</string>
+
 </resources>
