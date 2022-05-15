@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-
+    private val cartViewModel: CartViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.getOrCreateBadge(R.id.navigation_cart).number = 1
-
+        cartViewModel.onCreate()
+        cartViewModel.products.observe( this, { data ->
+            navView.getOrCreateBadge(R.id.navigation_cart).number = data.size
+        })
     }
 }
