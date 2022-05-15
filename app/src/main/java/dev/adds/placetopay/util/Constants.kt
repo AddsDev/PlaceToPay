@@ -7,4 +7,9 @@ object Constants {
     const val PLACE_TO_PAY_KEY = "024h1IlD"
     const val API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mmZ"
     const val ALGORITHM_API = "SHA-256"
+
+    enum class StatusResponse(val status: String){
+        OK("Ok"),
+        FAILED("Failed")
+    }
 }
