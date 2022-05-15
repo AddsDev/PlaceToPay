@@ -18,7 +18,10 @@
         tools:layout="@layout/fragment_cart" >
         <action
             android:id="@+id/action_navigation_cart_to_orderFragment"
-            app:destination="@id/order_fragment" />
+            app:destination="@id/order_fragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_out"
+            app:launchSingleTop="true" />
     </fragment>
 
     <fragment
