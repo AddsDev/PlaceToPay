@@ -36,7 +36,7 @@ import java.util.*
 class HomeFragment : Fragment() {
 
     private val homeViewModel: HomeViewModel by viewModels()
-
+    private val cartViewModel: CartViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
 
 
@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
 
 
         var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), products) { item ->
-
+            cartViewModel.addProduct(item)
         }
 
         binding.homeRecyclerProducts.apply {
