@@ -26,7 +26,7 @@ class CartFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
+    private var products: MutableList<Product> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -38,10 +38,40 @@ class CartFragment : Fragment() {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), products) { item ->
+            cartViewModel.removeProduct(item)
+        }.apply {
+            textButton = R.string.remove
+        }
+
+        binding.shopRecyclerProducts.apply {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = productRecyclerViewAdapter
+        }
+        cartViewModel.total.observe(viewLifecycleOwner,{ total->
+            binding.shopTotal.text = getString(R.string.total).let { s: String -> s+total }
+        })
+        cartViewModel.products.observe(viewLifecycleOwner,{ data ->
+            //Refactor -> filter
+            products.clear()
+            products.addAll(data)
+            productRecyclerViewAdapter.notifyDataSetChanged()
+        })
 
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        cartViewModel.onCreate()
+        events()
+    }
+
+    private fun events() {
+        binding.shopNext.setOnClickListener {
+            OrderRouter().launch(requireContext())
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
