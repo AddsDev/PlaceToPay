@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentCartBinding
 import dev.adds.placetopay.model.domain.Product
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
-import dev.adds.placetopay.ui.order.OrderRouter
 
 class CartFragment : Fragment() {
 
@@ -25,6 +22,7 @@ class CartFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
 
     private var products: MutableList<Product> = mutableListOf()
 
@@ -69,7 +67,7 @@ class CartFragment : Fragment() {
 
     private fun events() {
         binding.shopNext.setOnClickListener {
-            OrderRouter().launch(requireContext())
+            Navigation.findNavController(it).navigate(R.id.action_navigation_cart_to_orderFragment)
         }
     }
 
