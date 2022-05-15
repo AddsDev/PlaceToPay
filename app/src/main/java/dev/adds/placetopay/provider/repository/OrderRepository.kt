@@ -11,10 +11,12 @@ import dev.adds.placetopay.provider.OrderProvider
 class OrderRepository {
 
     fun newOrder(payer: Payer, payment: Payment, card: Card){
-        OrderProvider.process = Process(payer, payment, card)
+        OrderProvider.process = Process(payer, payment, Instrument(card))
+        OrderProvider.orders.add(OrderProvider.process!!)
     }
     fun getOrder(): Process{
         return  OrderProvider.process!!
     }
     fun getAllOrders() = OrderProvider.orders
+
 }
