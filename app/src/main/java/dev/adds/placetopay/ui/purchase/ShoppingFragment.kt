@@ -1,40 +1,43 @@
-package dev.adds.placetopay.ui.notifications
+package dev.adds.placetopay.ui.purchase
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import dev.adds.placetopay.R
-import dev.adds.placetopay.databinding.FragmentNotificationsBinding
+import androidx.recyclerview.widget.GridLayoutManager
+import dev.adds.placetopay.databinding.FragmentShoppingBinding
+import dev.adds.placetopay.model.domain.Product
+import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
 
-class NotificationsFragment : Fragment() {
+class ShoppingFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentNotificationsBinding? = null
+    private lateinit var shoppingViewModel: ShoppingViewModel
+    private var _binding: FragmentShoppingBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        shoppingViewModel =
+            ViewModelProvider(this).get(ShoppingViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentShoppingBinding.inflate(inflater, container, false)
+
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+
         return root
     }
 
