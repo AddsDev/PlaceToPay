@@ -12,4 +12,9 @@ object Constants {
         OK("Ok"),
         FAILED("Failed")
     }
+
+    enum class Currency(val currency: String){
+        Dollar("USD"),
+        Pesos_COP("COP")
+    }
 }
