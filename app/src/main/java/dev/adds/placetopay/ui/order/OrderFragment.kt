@@ -1,18 +1,13 @@
 package dev.adds.placetopay.ui.order
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
-import com.google.gson.Gson
-import dev.adds.placetopay.R
-import dev.adds.placetopay.databinding.ActivityOrderBinding
 import dev.adds.placetopay.databinding.FragmentOrderBinding
 import dev.adds.placetopay.model.domain.Amount
 import dev.adds.placetopay.model.domain.Card
