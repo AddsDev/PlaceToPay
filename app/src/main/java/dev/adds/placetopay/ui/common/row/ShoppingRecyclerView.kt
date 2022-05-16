@@ -21,7 +21,7 @@ class ShoppingRecyclerView(val context: Context, var shopping: MutableList<Shopp
             binding.transactionReference.text = "REF: ${shopping.processResponse.reference}"
             binding.transactionAmount.text =
                 "$${shopping.processResponse.amount.total} ${shopping.processResponse.amount.currency}"
-            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shopping.card.number.substring(shopping.card.number.length-5, shopping.card.number.lastIndex)
+            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shopping.process.instrument.card.number.substring(shopping.process.instrument.card.number.length-5, shopping.process.instrument.card.number.lastIndex)
             binding.transactionStatus.text = shopping.processResponse.status.status
             binding.transactionRemove.setOnClickListener {
                 listener(shopping)

@@ -52,7 +52,7 @@ class OrderViewModel : ViewModel() {
                 processResponse_.postValue(result)
 
                 ManagementPayment().addPayment(Shopping(
-                    ManagementOrder().getOrder(),result, payer.value!!,card.value!!))
+                    ManagementOrder().getOrder(),result))
             }
             itsPaying.postValue(false)
         }
