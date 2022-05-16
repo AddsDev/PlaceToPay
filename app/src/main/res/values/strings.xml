@@ -36,5 +36,6 @@
     <string name="card.paying.finalized">Finalized</string>
     <!-- Shopping Bag -->
     <string name="title_shopping">Shopping</string>
+    <string name="shopping.card.number.hint">XXXX XXXX XXXX </string>
 
 </resources>
