@@ -13,8 +13,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentCartBinding
-import dev.adds.placetopay.model.domain.Product
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
+import dev.adds.placetopay.usescase.model.ProductItem
 
 @WithFragmentBindings
 @AndroidEntryPoint
@@ -28,7 +28,7 @@ class CartFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private var products: MutableList<Product> = mutableListOf()
+    private var productItems: MutableList<ProductItem> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -40,7 +40,7 @@ class CartFragment : Fragment() {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), products) { item ->
+        var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), productItems) { item ->
             cartViewModel.removeProduct(item)
         }.apply {
             textButton = R.string.remove
@@ -50,15 +50,15 @@ class CartFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = productRecyclerViewAdapter
         }
-        cartViewModel.total.observe(viewLifecycleOwner,{ total->
-            binding.shopTotal.text = getString(R.string.total).let { s: String -> s+total }
-        })
-        cartViewModel.products.observe(viewLifecycleOwner,{ data ->
+        cartViewModel.total.observe(viewLifecycleOwner) { total ->
+            binding.shopTotal.text = getString(R.string.total).let { s: String -> s + total }
+        }
+        cartViewModel.products.observe(viewLifecycleOwner) { data ->
             //Refactor -> filter
-            products.clear()
-            products.addAll(data)
+            productItems.clear()
+            productItems.addAll(data)
             productRecyclerViewAdapter.notifyDataSetChanged()
-        })
+        }
 
         return root
     }

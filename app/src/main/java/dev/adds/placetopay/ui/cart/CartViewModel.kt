@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.adds.placetopay.model.domain.Product
+import dev.adds.placetopay.model.domain.ProductModel
 import dev.adds.placetopay.usescase.ManagementCart
+import dev.adds.placetopay.usescase.model.ProductItem
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,12 +14,12 @@ class CartViewModel @Inject constructor(
     private  val managementCart: ManagementCart
     ) : ViewModel() {
 
-    private val productsList  = MutableLiveData<List<Product>>()
-    private val productItem = MutableLiveData<Product>()
+    private val productsList  = MutableLiveData<List<ProductItem>>()
+    private val productItem = MutableLiveData<ProductItem>()
     private val totalCart = MutableLiveData<Float>()
 
-    val products : LiveData<List<Product>> = productsList
-    val product: LiveData<Product> = productItem
+    val products : LiveData<List<ProductItem>> = productsList
+    val productModel: LiveData<ProductItem> = productItem
     val total : LiveData<Float> = totalCart
 
 
@@ -26,13 +27,13 @@ class CartViewModel @Inject constructor(
         productsList.value = managementCart()!!
         computedTotal()
     }
-    fun addProduct(product: Product){
-        managementCart.addProduct(product)
+    fun addProduct(productItem: ProductItem){
+        managementCart.addProduct(productItem)
         onCreate()
     }
 
-    fun removeProduct(product: Product): Boolean {
-        var flag = managementCart.removeProduct(product)
+    fun removeProduct(productItem: ProductItem): Boolean {
+        var flag = managementCart.removeProduct(productItem)
         onCreate()
         return flag
     }

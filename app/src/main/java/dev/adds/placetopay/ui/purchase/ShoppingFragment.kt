@@ -4,22 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.databinding.FragmentShoppingBinding
-import dev.adds.placetopay.model.domain.Payment
-import dev.adds.placetopay.model.domain.Product
-import dev.adds.placetopay.model.domain.Shopping
-import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
 import dev.adds.placetopay.ui.common.row.ShoppingRecyclerView
+import dev.adds.placetopay.usescase.model.ShoppingItem
 
 @WithFragmentBindings
 @AndroidEntryPoint
@@ -32,7 +24,7 @@ class ShoppingFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private var payments: MutableList<Shopping> = mutableListOf()
+    private var payments: MutableList<ShoppingItem> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,11 +47,11 @@ class ShoppingFragment : Fragment() {
             adapter = paymentRecyclerViewAdapter
         }
 
-        shoppingViewModel.payments.observe(viewLifecycleOwner,{ data->
+        shoppingViewModel.payments.observe(viewLifecycleOwner) { data ->
             payments.clear()
             payments.addAll(data)
             paymentRecyclerViewAdapter.notifyDataSetChanged()
-        })
+        }
 
         return root
     }

@@ -1,33 +1,39 @@
 package dev.adds.placetopay.provider.repository
 
-import android.util.Log
-import com.google.gson.Gson
-import dev.adds.placetopay.core.UrlApi
-import dev.adds.placetopay.model.domain.Shopping
-import dev.adds.placetopay.model.domain.payment.Process
-import dev.adds.placetopay.model.domain.payment.ProcessResponse
+import dev.adds.placetopay.model.database.dao.TransactionDao
+import dev.adds.placetopay.model.database.entities.TransactionEntity
+import dev.adds.placetopay.model.domain.payment.ProcessModel
 import dev.adds.placetopay.provider.PaymentProvider
 import dev.adds.placetopay.provider.ProcessProvider
 import dev.adds.placetopay.provider.services.ApiService
+import dev.adds.placetopay.usescase.model.ShoppingItem
+import dev.adds.placetopay.usescase.model.ProcessItem
+import dev.adds.placetopay.usescase.model.ProcessResponseItem
+import dev.adds.placetopay.usescase.model.toDomain
 import javax.inject.Inject
 
 class PaymentRepository @Inject constructor(
     private val api: ApiService,
     private val paymentProvider: PaymentProvider,
-    private val processProvider: ProcessProvider
+    private val processProvider: ProcessProvider,
+    private val transactionDao: TransactionDao
 ) {
 
-    suspend fun getProcessResponse(process: Process) : ProcessResponse{
-        Log.i("RESPONSE_REPOP", Gson().toJson(process))
-        val response = api.getProcessResponse(process)
+    suspend fun getProcessResponse(processItem: ProcessItem) : ProcessResponseItem {
+        val response = api.getProcessResponse(processItem.toModel())// pasar modelo
+        //transactionDao.insert(TransactionEntity(null, response.statusModel))
         processProvider.process.add(response)
-        return response
+
+        return response.toDomain()
     }
-    fun getAllPayments(): List<Shopping>{
-        return paymentProvider.shopping
+    fun getAllPayments(): List<ShoppingItem>{
+        return paymentProvider.shoppingModel.map { it.toDomain() }
     }
-    fun addPayment(shopping: Shopping){
-        paymentProvider.shopping.add(shopping)
+
+    fun addPayment(shoppingItem: ShoppingItem){
+        paymentProvider.shoppingModel.add(shoppingItem.toModel())
     }
-    fun removePayment(shopping: Shopping): Boolean = paymentProvider.shopping.remove(shopping)
+
+    fun removePayment(shoppingItem: ShoppingItem): Boolean =
+        paymentProvider.shoppingModel.remove(shoppingItem.toModel())
 }

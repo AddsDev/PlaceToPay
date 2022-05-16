@@ -1,7 +1,8 @@
 package dev.adds.placetopay.usescase
 
-import dev.adds.placetopay.model.domain.Shopping
+import dev.adds.placetopay.model.domain.ShoppingModel
 import dev.adds.placetopay.provider.repository.PaymentRepository
+import dev.adds.placetopay.usescase.model.ShoppingItem
 import javax.inject.Inject
 
 class ManagementPayment @Inject constructor(
@@ -9,10 +10,10 @@ class ManagementPayment @Inject constructor(
     ){
 
 
-    operator fun invoke(): List<Shopping> = repository.getAllPayments()
+    operator fun invoke(): List<ShoppingItem> = repository.getAllPayments()
 
-    fun addPayment(shopping: Shopping): Unit = repository.addPayment(shopping)
+    fun addPayment(shoppingItem: ShoppingItem): Unit = repository.addPayment(shoppingItem)
 
-    fun removePayment(shopping: Shopping): Boolean = repository.removePayment(shopping)
+    fun removePayment(shoppingItem: ShoppingItem): Boolean = repository.removePayment(shoppingItem)
 
 }

@@ -1,10 +1,10 @@
 package dev.adds.placetopay.provider.repository
 
-import dev.adds.placetopay.model.domain.Card
-import dev.adds.placetopay.model.domain.Instrument
-import dev.adds.placetopay.model.domain.Payer
-import dev.adds.placetopay.model.domain.Payment
-import dev.adds.placetopay.model.domain.payment.Process
+import dev.adds.placetopay.model.domain.CardModel
+import dev.adds.placetopay.model.domain.InstrumentModel
+import dev.adds.placetopay.model.domain.PayerModel
+import dev.adds.placetopay.model.domain.PaymentModel
+import dev.adds.placetopay.model.domain.payment.ProcessModel
 import dev.adds.placetopay.provider.OrderProvider
 import javax.inject.Inject
 
@@ -13,12 +13,12 @@ class OrderRepository @Inject constructor(
     private val orderProvider: OrderProvider
 ){
 
-    fun newOrder(payer: Payer, payment: Payment, card: Card){
-        orderProvider.process = Process(payer, payment, Instrument(card))
-        orderProvider.orders.add(orderProvider.process!!)
+    fun newOrder(payerModel: PayerModel, paymentModel: PaymentModel, cardModel: CardModel){
+        orderProvider.processModel = ProcessModel(payerModel, paymentModel, InstrumentModel(cardModel))
+        orderProvider.orders.add(orderProvider.processModel!!)
     }
-    fun getOrder(): Process{
-        return  orderProvider.process!!
+    fun getOrder(): ProcessModel{
+        return  orderProvider.processModel!!
     }
     fun getAllOrders() = orderProvider.orders
 
