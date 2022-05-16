@@ -9,7 +9,7 @@ import dev.adds.placetopay.util.extension.getSHA256
 import java.util.*
 
 class Auth(@SerializedName("login") var login: String, key: String){
-    @SerializedName("sedd") var seed: String
+    @SerializedName("seed") var seed: String
     @SerializedName("nonce") var nonce: String
     @SerializedName("tranKey") var tranKey : String
 
