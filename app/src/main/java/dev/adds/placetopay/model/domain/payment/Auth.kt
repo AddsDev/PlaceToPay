@@ -1,5 +1,6 @@
 package dev.adds.placetopay.model.domain.payment
 
+import com.google.gson.annotations.SerializedName
 import dev.adds.placetopay.util.Constants
 import dev.adds.placetopay.util.extension.apiFormat
 import dev.adds.placetopay.util.extension.getBase64
@@ -7,10 +8,10 @@ import dev.adds.placetopay.util.extension.getRandom
 import dev.adds.placetopay.util.extension.getSHA256
 import java.util.*
 
-class Auth(var login: String, key: String){
-    var seed: String
-    var nonce: String
-    var tranKey : String
+class Auth(@SerializedName("login") var login: String, key: String){
+    @SerializedName("sedd") var seed: String
+    @SerializedName("nonce") var nonce: String
+    @SerializedName("tranKey") var tranKey : String
 
     init {
         val nonceTemp = String().getRandom()

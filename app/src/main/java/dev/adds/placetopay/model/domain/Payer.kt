@@ -1,3 +1,7 @@
 package dev.adds.placetopay.model.domain
 
-data class Payer(var name: String, var surname : String, var email: String, var documentType: String, var document: String, var mobile: String)
+import com.google.gson.annotations.SerializedName
+
+data class Payer(@SerializedName("name") var name: String, @SerializedName("surname") var surname : String,
+                 @SerializedName("email") var email: String, @SerializedName("documentType") var documentType: String,
+                 @SerializedName("document") var document: String, @SerializedName("mobile") var mobile: String)
