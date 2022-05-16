@@ -25,7 +25,7 @@ class ProductRecyclerViewAdapter(val context: Context, var products: MutableList
         fun bin(product: Product, listener: (Product) -> Unit){
             binding.priceProduct.text = "$ ${product.price}"
             binding.nameProduct.text = product.name
-            Picasso.get().load("https://via.placeholder.com/250/000000/FFFFFF/?text=${product.id}")
+            Picasso.get().load("https://via.placeholder.com/250/FFFFFF/000000/?text=${product.id}")
                 .placeholder(R.drawable.ic_shopping_bag_black_24dp)
                 .error(R.drawable.ic_shopping_cart_black_24dp)
                 .into(binding.imageProduct)
