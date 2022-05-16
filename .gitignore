@@ -329,3 +329,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.idea/navEditor.xml
+.idea/misc.xml
+.idea/misc.xml
