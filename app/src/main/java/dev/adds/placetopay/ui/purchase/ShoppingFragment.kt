@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.databinding.FragmentShoppingBinding
 import dev.adds.placetopay.model.domain.Payment
 import dev.adds.placetopay.model.domain.Product
@@ -19,6 +21,8 @@ import dev.adds.placetopay.model.domain.Shopping
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
 import dev.adds.placetopay.ui.common.row.ShoppingRecyclerView
 
+@WithFragmentBindings
+@AndroidEntryPoint
 class ShoppingFragment : Fragment() {
 
     private lateinit var shoppingViewModel: ShoppingViewModel

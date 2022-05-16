@@ -1,9 +1,10 @@
 package dev.adds.placetopay.provider
 
 import dev.adds.placetopay.model.domain.Shopping
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PaymentProvider {
-    companion object{
-        var shopping: MutableList<Shopping> = mutableListOf()
-    }
+@Singleton
+class PaymentProvider @Inject constructor() {
+    var shopping: MutableList<Shopping> = mutableListOf()
 }

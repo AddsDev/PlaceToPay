@@ -9,11 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentCartBinding
 import dev.adds.placetopay.model.domain.Product
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
 
+@WithFragmentBindings
+@AndroidEntryPoint
 class CartFragment : Fragment() {
 
     private val cartViewModel: CartViewModel by viewModels()

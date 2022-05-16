@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentOrderBinding
 import dev.adds.placetopay.model.domain.Amount
@@ -23,7 +25,8 @@ import dev.adds.placetopay.util.extension.apiFormat
 import java.util.*
 import kotlin.concurrent.schedule
 
-
+@WithFragmentBindings
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
 
     private val orderViewModel : OrderViewModel by viewModels()

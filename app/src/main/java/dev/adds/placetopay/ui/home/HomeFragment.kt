@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentHomeBinding
 import dev.adds.placetopay.model.domain.Product
@@ -32,9 +34,11 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import javax.inject.Inject
 
+@WithFragmentBindings
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
-
     private val homeViewModel: HomeViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
@@ -59,7 +63,7 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
 
-        var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), products) { item ->
+        val productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), products) { item ->
             cartViewModel.addProduct(item)
         }
 
@@ -69,14 +73,14 @@ class HomeFragment : Fragment() {
 
         }
 
-        homeViewModel.isLoading.observe(viewLifecycleOwner, { status ->
+        homeViewModel.isLoading.observe(viewLifecycleOwner) { status ->
             binding.progressCircular.isVisible = status
-        })
+        }
 
-        homeViewModel.products.observe(viewLifecycleOwner, { data ->
+        homeViewModel.products.observe(viewLifecycleOwner) { data ->
             products.addAll(data)
             productRecyclerViewAdapter.notifyDataSetChanged()
-        })
+        }
 
         return root
     }

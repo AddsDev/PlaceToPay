@@ -97,9 +97,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberSigned"
+                            android:maxLength="16"
+                            tools:text="1111 1111 1111 1111"
+                            android:text="4111111111111111"
                             android:textColor="@color/white.smoke"
-                            android:textStyle="bold"
-                            android:text="1111 1111 1111 1111" />
+                            android:textStyle="bold" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
