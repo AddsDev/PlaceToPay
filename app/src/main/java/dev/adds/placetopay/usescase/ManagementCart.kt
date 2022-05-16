@@ -13,6 +13,7 @@ class ManagementCart {
 
     fun removeProduct(product: Product): Boolean = repository.removeProduct(product)
 
+    fun clean(): Unit = repository.clean()
     fun computedTotal(): Float = repository.getTotal()
 
 }

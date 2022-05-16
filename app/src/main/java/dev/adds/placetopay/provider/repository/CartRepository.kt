@@ -20,6 +20,9 @@ class CartRepository {
     fun removeProduct(index: Int){
         ProductProvider.cart.removeAt(index)
     }
+    fun clean(){
+        ProductProvider.cart.clear()
+    }
 
     fun getTotal(): Float {
         return ProductProvider.cart.map {it.price }.sumOf { fl: Float? -> fl!!.toInt() }.toFloat()

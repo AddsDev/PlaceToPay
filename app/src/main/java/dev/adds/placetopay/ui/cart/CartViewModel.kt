@@ -33,6 +33,7 @@ class CartViewModel : ViewModel() {
         onCreate()
         return flag
     }
+    fun clean() : Unit = ManagementCart().clean()
 
     private fun computedTotal(){
         totalCart.postValue(ManagementCart().computedTotal())

@@ -40,9 +40,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
 
 
-    private lateinit var retrofit : Retrofit;
-    private lateinit var service : IGatewayService;
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
