@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import dev.adds.placetopay.databinding.FragmentShoppingBinding
+import dev.adds.placetopay.model.domain.Payment
 import dev.adds.placetopay.model.domain.Product
+import dev.adds.placetopay.model.domain.Shopping
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
+import dev.adds.placetopay.ui.common.row.ShoppingRecyclerView
 
 class ShoppingFragment : Fragment() {
 
@@ -23,7 +28,7 @@ class ShoppingFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-
+    private var payments: MutableList<Shopping> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +42,27 @@ class ShoppingFragment : Fragment() {
 
         val root: View = binding.root
 
+        val paymentRecyclerViewAdapter = ShoppingRecyclerView(requireContext(), payments) { item ->
+            shoppingViewModel.removePayment(item)
+        }
+        
+        val shoppingRecyclerView = binding.shoppingRecyclerPayments.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = paymentRecyclerViewAdapter
+        }
+
+        shoppingViewModel.payments.observe(viewLifecycleOwner,{ data->
+            payments.clear()
+            payments.addAll(data)
+            paymentRecyclerViewAdapter.notifyDataSetChanged()
+        })
 
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        shoppingViewModel.onCreate()
     }
 
     override fun onDestroyView() {
