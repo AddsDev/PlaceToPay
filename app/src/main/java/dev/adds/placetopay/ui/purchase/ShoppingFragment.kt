@@ -49,8 +49,10 @@ class ShoppingFragment : Fragment() {
 
         shoppingViewModel.payments.observe(viewLifecycleOwner) { data ->
             payments.clear()
-            payments.addAll(data)
-            paymentRecyclerViewAdapter.notifyDataSetChanged()
+            if (data != null) {
+                payments.addAll(data)
+                paymentRecyclerViewAdapter.notifyDataSetChanged()
+            }
         }
 
         return root
