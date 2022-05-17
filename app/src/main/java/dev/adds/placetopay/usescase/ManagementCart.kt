@@ -1,19 +1,26 @@
 package dev.adds.placetopay.usescase
 
-import dev.adds.placetopay.model.domain.Product
 import dev.adds.placetopay.provider.repository.CartRepository
+import dev.adds.placetopay.usescase.crud.IAddItem
+import dev.adds.placetopay.usescase.crud.IGetItems
+import dev.adds.placetopay.usescase.crud.IRemoveItem
+import dev.adds.placetopay.usescase.model.ProductItem
+import javax.inject.Inject
 
-class ManagementCart {
+class ManagementCart @Inject constructor(
+    private val repository: CartRepository
+    ): IGetItems<ProductItem>,IAddItem<ProductItem>, IRemoveItem<ProductItem>{
 
-    private val repository = CartRepository()
+    suspend operator fun invoke(): List<ProductItem> = repository.getAllProductsCart()
 
-    operator fun invoke(): List<Product>? = repository.getAllProducts()
+    override suspend fun removeItem(item: ProductItem): Boolean = repository.removeProduct(item)
 
-    fun addProduct(product: Product): Unit = repository.addProduct(product)
+    suspend fun clean(): Unit = repository.clean()
 
-    fun removeProduct(product: Product): Boolean = repository.removeProduct(product)
-
-    fun clean(): Unit = repository.clean()
     fun computedTotal(): Float = repository.getTotal()
+
+    override fun getAllItems(): List<ProductItem> = repository.getAllProducts()
+
+    override suspend fun addItem(item: ProductItem): Unit = repository.addProduct(item)
 
 }

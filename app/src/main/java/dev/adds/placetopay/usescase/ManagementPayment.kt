@@ -1,16 +1,20 @@
 package dev.adds.placetopay.usescase
 
-import dev.adds.placetopay.model.domain.Shopping
 import dev.adds.placetopay.provider.repository.PaymentRepository
+import dev.adds.placetopay.usescase.crud.IAddItem
+import dev.adds.placetopay.usescase.crud.IRemoveItem
+import dev.adds.placetopay.usescase.model.ShoppingItem
+import javax.inject.Inject
 
-class ManagementPayment {
-    private val  repository = PaymentRepository()
+class ManagementPayment @Inject constructor(
+    private val repository: PaymentRepository
+    ): IAddItem<ShoppingItem>, IRemoveItem<ShoppingItem>{
 
 
-    operator fun invoke(): List<Shopping> = repository.getAllPayments()
+    suspend operator fun invoke(): List<ShoppingItem> = repository.getAllPayments()
 
-    fun addPayment(shopping: Shopping): Unit = repository.addPayment(shopping)
+    override suspend fun addItem(item: ShoppingItem): Unit = repository.addPayment(item)
 
-    fun removePayment(shopping: Shopping): Boolean = repository.removePayment(shopping)
+    override suspend fun removeItem(item: ShoppingItem): Boolean = repository.removePayment(item)
 
 }

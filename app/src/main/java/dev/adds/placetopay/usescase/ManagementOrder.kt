@@ -1,19 +1,23 @@
 package dev.adds.placetopay.usescase
 
-import dev.adds.placetopay.model.domain.Card
-import dev.adds.placetopay.model.domain.Payer
-import dev.adds.placetopay.model.domain.Payment
-import dev.adds.placetopay.model.domain.payment.Process
+import dev.adds.placetopay.model.domain.CardModel
+import dev.adds.placetopay.model.domain.PayerModel
+import dev.adds.placetopay.model.domain.PaymentModel
+import dev.adds.placetopay.model.domain.payment.ProcessModel
 import dev.adds.placetopay.provider.repository.OrderRepository
+import dev.adds.placetopay.usescase.crud.IGetItem
+import dev.adds.placetopay.usescase.model.*
+import javax.inject.Inject
 
-class ManagementOrder {
+class ManagementOrder @Inject constructor(
+    private val repository: OrderRepository
+) : IGetItem<ProcessItem>{
 
-    private val respository = OrderRepository()
+    operator fun invoke(): List<ProcessItem> = repository.getAllOrders().map { it.toDomain() }
 
-    operator fun invoke(): List<Process>? = respository.getAllOrders()
+    fun addOrder(payerItem: PayerItem, paymentItem: PaymentItem, cardItem: CardItem): Unit =
+        repository.newOrder(payerItem.toModel(), paymentItem.toModel(), cardItem.toModel())
 
-    fun newOrder(payer: Payer, payment: Payment, card: Card): Unit = respository.newOrder(payer, payment, card)
-
-    fun getOrder(): Process = respository.getOrder()
+    override fun getItem(): ProcessItem = repository.getOrder().toDomain()
 
 }

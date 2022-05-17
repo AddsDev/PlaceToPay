@@ -1,9 +1,10 @@
 package dev.adds.placetopay.provider
 
-import dev.adds.placetopay.model.domain.payment.ProcessResponse
+import dev.adds.placetopay.model.domain.payment.ProcessResponseModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ProcessProvider {
-    companion object{
-        var process : MutableList<ProcessResponse> = mutableListOf()
-    }
+@Singleton
+class ProcessProvider @Inject constructor() {
+    var process : MutableList<ProcessResponseModel> = mutableListOf()
 }

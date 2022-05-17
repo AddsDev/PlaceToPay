@@ -7,14 +7,19 @@ object Constants {
     const val PLACE_TO_PAY_KEY = "024h1IlD"
     const val API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mmZ"
     const val ALGORITHM_API = "SHA-256"
+    const val READ_TIME_OUT_API = 15L
+    const val CONNECT_TIME_OUT_API = 15L
+    const val POOL_TIME_OUT_API = 30L
+    const val SHOP_DATABASE_NAME = "shop"
 
     enum class StatusResponse(val status: String){
-        OK("Ok"),
-        FAILED("Failed")
+        OK("OK"),
+        FAILED("FAILED CONNECT"),
+        PROCESSING("PROCESSING")
     }
 
     enum class Currency(val currency: String){
-        Dollar("USD"),
-        Pesos_COP("COP")
+        USD("USD"),
+        COP("COP")
     }
 }

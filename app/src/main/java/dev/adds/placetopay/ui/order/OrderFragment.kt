@@ -7,23 +7,24 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentOrderBinding
-import dev.adds.placetopay.model.domain.Amount
-import dev.adds.placetopay.model.domain.Card
-import dev.adds.placetopay.model.domain.Payer
-import dev.adds.placetopay.model.domain.Payment
 import dev.adds.placetopay.ui.cart.CartViewModel
+import dev.adds.placetopay.usescase.model.AmountItem
+import dev.adds.placetopay.usescase.model.CardItem
+import dev.adds.placetopay.usescase.model.PayerItem
+import dev.adds.placetopay.usescase.model.PaymentItem
 import dev.adds.placetopay.util.Constants
 import dev.adds.placetopay.util.extension.apiFormat
 import java.util.*
-import kotlin.concurrent.schedule
 
-
+@WithFragmentBindings
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
 
     private val orderViewModel : OrderViewModel by viewModels()
@@ -53,11 +54,11 @@ class OrderFragment : Fragment() {
     private fun events() {
         binding.orderNext.setOnClickListener {
 
-            val card = Card(binding.orderCardNumber.text.toString(),
+            val cardItem = CardItem(binding.orderCardNumber.text.toString(),
                 "${binding.orderCardMonth.text.toString()}/${binding.orderCardYear.text.toString()}",
                 binding.orderCardCVV.text.toString(), 0 )
 
-            val payer = Payer(binding.orderName.text.toString(),
+            val payerItem = PayerItem(binding.orderName.text.toString(),
                 binding.orderSurname.text.toString(),
                 binding.orderEmail.text.toString(),
                 "CC" ,
@@ -65,37 +66,36 @@ class OrderFragment : Fragment() {
                 binding.orderMobile.text.toString())
 
 
-            val payment = Payment(binding.orderDocument.text.toString(),
+            val paymentItem = PaymentItem(binding.orderDocument.text.toString(),
                 Date().apiFormat(),
-                Amount(Constants.Currency.Dollar.currency, cartViewModel.total.value!!.toInt())
+                AmountItem(Constants.Currency.USD.currency, cartViewModel.total.value!!.toInt())
             )
 
 
-            orderViewModel.setCard(card)
-            orderViewModel.setPayer(payer)
-            orderViewModel.setPayment(payment)
+            orderViewModel.setCard(cardItem)
+            orderViewModel.setPayer(payerItem)
+            orderViewModel.setPayment(paymentItem)
             startTransaction()
         }
 
     }
 
     private fun startTransaction() {
-        //Pay
         orderViewModel.processOrder()
         cartViewModel.clean()
         binding.nestedScrollView.isEnabled = false
         binding.orderNext.text = getString(R.string.card_paying)
-        orderViewModel.itsPaying.observe(viewLifecycleOwner,{ flag ->
-            if(!flag)
-                endTransanction()
-        })
-        orderViewModel.processResponse.observe(viewLifecycleOwner,{
+        orderViewModel.itsPaying.observe(viewLifecycleOwner) { flag ->
+            if (!flag)
+                endTransaction()
+        }
+        orderViewModel.processResponseItem.observe(viewLifecycleOwner) {
             Log.i("RESPONSE_API", Gson().toJson(it))
-        })
+        }
 
     }
 
-    private fun endTransanction() {
+    private fun endTransaction() {
         binding.orderNext.text =  getString(R.string.card_paying_finalized)
         Navigation.findNavController(binding.root).apply {
             popBackStack(R.id.navigation_cart, true)

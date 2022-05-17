@@ -4,62 +4,58 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.adds.placetopay.model.domain.Card
-import dev.adds.placetopay.model.domain.Payer
-import dev.adds.placetopay.model.domain.Payment
-import dev.adds.placetopay.model.domain.Shopping
-import dev.adds.placetopay.model.domain.payment.Process
-import dev.adds.placetopay.model.domain.payment.ProcessResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.adds.placetopay.usescase.GetProcess
 import dev.adds.placetopay.usescase.ManagementOrder
 import dev.adds.placetopay.usescase.ManagementPayment
+import dev.adds.placetopay.usescase.model.*
 import dev.adds.placetopay.util.Constants
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val getProcess: GetProcess,
+    private val managementOrder: ManagementOrder,
+    private val managementPayment: ManagementPayment
+) : ViewModel() {
 
-class OrderViewModel : ViewModel() {
-
-    private val payer_ = MutableLiveData<Payer>()
-    private val payment_ = MutableLiveData<Payment>()
-    private val card_ = MutableLiveData<Card>()
-    private val order_ = MutableLiveData<Process>()
-    private val processResponse_ = MutableLiveData<ProcessResponse>()
+    private val payer_Item_ = MutableLiveData<PayerItem>()
+    private val payment_Item_ = MutableLiveData<PaymentItem>()
+    private val card_Item_ = MutableLiveData<CardItem>()
+    private val order_ = MutableLiveData<ProcessItem>()
+    private val processResponse_Item_ = MutableLiveData<ProcessResponseItem>()
 
     val itsPaying = MutableLiveData<Boolean>()
-    val payer : LiveData<Payer> = payer_
-    val payment : LiveData<Payment> = payment_
-    val card: LiveData<Card> = card_
-    val order: LiveData<Process> = order_
-    val processResponse : LiveData<ProcessResponse> = processResponse_
-    var getProcess = GetProcess()
+    val paymentItem : LiveData<PaymentItem> = payment_Item_
+    val processResponseItem : LiveData<ProcessResponseItem> = processResponse_Item_
 
-    fun setPayer(payer: Payer){
-        payer_.value = payer
+    fun setPayer(payerItem: PayerItem){
+        payer_Item_.value = payerItem
     }
-    fun setCard(card: Card){
-        card_.value = card
+    fun setCard(cardItem: CardItem){
+        card_Item_.value = cardItem
     }
-    fun setPayment(payment: Payment){
-        payment_.value = payment
+    fun setPayment(paymentItem: PaymentItem){
+        payment_Item_.value = paymentItem
     }
 
     fun processOrder(){
-        ManagementOrder().newOrder(payer_.value!!, payment_.value!!, card_.value!!)
-
+        managementOrder.addOrder(payer_Item_.value!!, payment_Item_.value!!, card_Item_.value!!)
         viewModelScope.launch {
             itsPaying.postValue(true)
-            val result = getProcess(ManagementOrder().getOrder())
-            if(!result.status.equals(Constants.StatusResponse.FAILED.name)){
-                processResponse_.postValue(result)
+            val result = getProcess(managementOrder.getItem())
+            if(!result.statusItem.equals(Constants.StatusResponse.FAILED.name)){
+                processResponse_Item_.postValue(result)
 
-                ManagementPayment().addPayment(Shopping(
-                    ManagementOrder().getOrder(),result, payer.value!!,card.value!!))
+                managementPayment.addItem(ShoppingItem(
+                    managementOrder.getItem(),result))
             }
             itsPaying.postValue(false)
         }
     }
 
-    fun getOrder() : Process {
-        order_.value = ManagementOrder().getOrder()
+    fun getOrder() : ProcessItem {
+        order_.value = managementOrder.getItem()
         return order_.value!!
     }
 

@@ -7,24 +7,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.TransactionItemBinding
-import dev.adds.placetopay.model.domain.Shopping
-import dev.adds.placetopay.model.domain.payment.ProcessResponse
+import dev.adds.placetopay.model.domain.ShoppingModel
+import dev.adds.placetopay.usescase.model.ShoppingItem
 
-class ShoppingRecyclerView(val context: Context, var shopping: MutableList<Shopping>, val update: (shopping: Shopping)-> Unit) :
+class ShoppingRecyclerView(val context: Context, var shoppingItem: MutableList<ShoppingItem>, val update: (shoppingItem: ShoppingItem)-> Unit) :
     RecyclerView.Adapter<ShoppingRecyclerView.ShoppingViewHolder>() {
 
     class ShoppingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val binding = TransactionItemBinding.bind(itemView)
 
-        fun bin(shopping: Shopping, context: Context,listener: (Shopping) -> Unit) {
-            binding.transactionReference.text = "REF: ${shopping.processResponse.reference}"
+        fun bin(shoppingItem: ShoppingItem, context: Context, listener: (ShoppingItem) -> Unit) {
+            binding.transactionReference.text = "REF: ${shoppingItem.processResponseItem.reference}"
             binding.transactionAmount.text =
-                "$${shopping.processResponse.amount.total} ${shopping.processResponse.amount.currency}"
-            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shopping.card.number.substring(shopping.card.number.length-5, shopping.card.number.lastIndex)
-            binding.transactionStatus.text = shopping.processResponse.status.status
+                "$${shoppingItem.processResponseItem.amountItem.total} ${shoppingItem.processResponseItem.amountItem.currency}"
+            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shoppingItem.processItem.instrumentItem.cardItem.number.substring(shoppingItem.processItem.instrumentItem.cardItem.number.length-5, shoppingItem.processItem.instrumentItem.cardItem.number.lastIndex)
+            binding.transactionStatus.text = shoppingItem.processResponseItem.statusItem.status
             binding.transactionRemove.setOnClickListener {
-                listener(shopping)
+                listener(shoppingItem)
             }
         }
     }
@@ -36,7 +36,7 @@ class ShoppingRecyclerView(val context: Context, var shopping: MutableList<Shopp
     }
 
     override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) =
-        holder.bin(shopping[position], context, update)
+        holder.bin(shoppingItem[position], context, update)
 
-    override fun getItemCount(): Int = shopping.size
+    override fun getItemCount(): Int = shoppingItem.size
 }

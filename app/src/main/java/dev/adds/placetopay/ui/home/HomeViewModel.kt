@@ -4,17 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.adds.placetopay.model.domain.Product
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.adds.placetopay.model.domain.ProductModel
 import dev.adds.placetopay.usescase.GetProducts
+import dev.adds.placetopay.usescase.model.ProductItem
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getProducts: GetProducts
+) : ViewModel() {
 
-    private val productsList = MutableLiveData<List<Product>>()
+    private val productsList = MutableLiveData<List<ProductItem>>()
 
     val isLoading = MutableLiveData<Boolean>()
 
-    var getProducts = GetProducts()
 
     fun onCreate(){
         viewModelScope.launch {
@@ -27,6 +32,6 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    val products : LiveData<List<Product>> = productsList
+    val products : LiveData<List<ProductItem>> = productsList
 
 }

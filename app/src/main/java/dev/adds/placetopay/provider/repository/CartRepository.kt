@@ -1,30 +1,49 @@
 package dev.adds.placetopay.provider.repository
 
-import dev.adds.placetopay.model.domain.Product
+import android.util.Log
+import dev.adds.placetopay.model.database.dao.CartDao
+import dev.adds.placetopay.model.database.entities.CartEntity
+import dev.adds.placetopay.model.domain.ProductModel
 import dev.adds.placetopay.provider.ProductProvider
+import dev.adds.placetopay.usescase.model.ProductItem
+import dev.adds.placetopay.usescase.model.toDomain
+import javax.inject.Inject
 
-class CartRepository {
+class CartRepository @Inject constructor(
+    private val productProvider: ProductProvider,
+    private val dao: CartDao
+){
 
-    fun getAllProducts(): List<Product>{
-        return  ProductProvider.cart
+    fun getAllProducts(): List<ProductItem>{
+        return  productProvider.cart.map { it.toDomain() }
     }
 
-    fun addProduct(product: Product){
-        ProductProvider.cart.add(product)
+    suspend fun addProduct(productItem: ProductItem){
+        productProvider.cart.add(productItem.toModel())
+        val id = dao.insert(CartEntity(name = productItem.name, img = productItem.img, price = productItem.price))
     }
 
-    fun removeProduct(product: Product): Boolean{
-        return ProductProvider.cart.remove(product)
+    suspend fun removeProduct(productItem: ProductItem): Boolean{
+        productProvider.cart.remove(productItem.toModel())
+        return dao.remove(CartEntity(productItem.id!!,productItem.name, productItem.img, productItem.price)) > 0
     }
 
     fun removeProduct(index: Int){
-        ProductProvider.cart.removeAt(index)
+        productProvider.cart.removeAt(index)
     }
-    fun clean(){
-        ProductProvider.cart.clear()
+    suspend fun clean(){
+        productProvider.cart.clear()
+        dao.remove()
     }
 
     fun getTotal(): Float {
-        return ProductProvider.cart.map {it.price }.sumOf { fl: Float? -> fl!!.toInt() }.toFloat()
+        return productProvider.cart.map {it.price }.sumOf { fl: Float? -> fl!!.toInt() }.toFloat()
+    }
+
+    suspend fun getAllProductsCart(): List<ProductItem> {
+        productProvider.cart.clear()
+        val response = dao.getAllProducts()
+        productProvider.cart.addAll(response.map { it.toDomain().toModel() })
+        return productProvider.cart.map { it.toDomain() }
     }
 }

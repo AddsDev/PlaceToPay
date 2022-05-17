@@ -9,10 +9,9 @@ import android.view.ViewGroup
 import com.squareup.picasso.Picasso
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.ProductItemBinding
-import dev.adds.placetopay.model.domain.Product
-import kotlin.coroutines.coroutineContext
+import dev.adds.placetopay.usescase.model.ProductItem
 
-class ProductRecyclerViewAdapter(val context: Context, var products: MutableList<Product>, val update: (product: Product)-> Unit) : RecyclerView.Adapter<ProductViewHolder>() {
+class ProductRecyclerViewAdapter(val context: Context, var productItem: MutableList<ProductItem>, val update: (productItem: ProductItem)-> Unit) : RecyclerView.Adapter<ProductViewHolder>() {
 
     var textButton: Int = R.string.add
 
@@ -22,15 +21,15 @@ class ProductRecyclerViewAdapter(val context: Context, var products: MutableList
     class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         private val binding  = ProductItemBinding.bind(itemView)
 
-        fun bin(product: Product, listener: (Product) -> Unit){
-            binding.priceProduct.text = "$ ${product.price}"
-            binding.nameProduct.text = product.name
-            Picasso.get().load("https://via.placeholder.com/250/FFFFFF/000000/?text=${product.id}")
+        fun bin(productItem: ProductItem, listener: (ProductItem) -> Unit){
+            binding.priceProduct.text = "$ ${productItem.price}"
+            binding.nameProduct.text = productItem.name
+            Picasso.get().load("https://via.placeholder.com/250/FFFFFF/000000/?text=${productItem.id}")
                 .placeholder(R.drawable.ic_shopping_bag_black_24dp)
                 .error(R.drawable.ic_shopping_cart_black_24dp)
                 .into(binding.imageProduct)
             binding.addProduct.setOnClickListener {
-                listener(product)
+                listener(productItem)
             }
         }
 
@@ -46,9 +45,9 @@ class ProductRecyclerViewAdapter(val context: Context, var products: MutableList
         return viewHolder
     }
 
-    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bin(products[position], update)
+    override fun onBindViewHolder(holder: ProductViewHolder, position: Int) = holder.bin(productItem[position], update)
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = productItem.size
 
 
 }
