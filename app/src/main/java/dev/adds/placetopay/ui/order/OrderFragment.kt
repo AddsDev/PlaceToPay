@@ -83,8 +83,11 @@ class OrderFragment : Fragment() {
     private fun startTransaction() {
         orderViewModel.processOrder()
         cartViewModel.clean()
-        binding.nestedScrollView.isEnabled = false
+        binding.nestedScrollView.visibility = View.GONE
+        binding.animationCheckOut.visibility = View.VISIBLE
+        binding.animationCheckOut.playAnimation()
         binding.orderNext.text = getString(R.string.card_paying)
+        binding.orderNext.isEnabled = false
         orderViewModel.itsPaying.observe(viewLifecycleOwner) { flag ->
             if (!flag)
                 endTransaction()
@@ -96,6 +99,7 @@ class OrderFragment : Fragment() {
     }
 
     private fun endTransaction() {
+        binding.animationCheckOut.pauseAnimation()
         binding.orderNext.text =  getString(R.string.card_paying_finalized)
         Navigation.findNavController(binding.root).apply {
             popBackStack(R.id.navigation_cart, true)

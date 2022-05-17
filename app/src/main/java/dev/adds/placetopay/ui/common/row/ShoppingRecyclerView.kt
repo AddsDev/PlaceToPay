@@ -18,10 +18,10 @@ class ShoppingRecyclerView(val context: Context, var shoppingItem: MutableList<S
         private val binding = TransactionItemBinding.bind(itemView)
 
         fun bin(shoppingItem: ShoppingItem, context: Context, listener: (ShoppingItem) -> Unit) {
-            binding.transactionReference.text = "REF: ${shoppingItem.processResponseItem.reference}"
+            binding.transactionReference.text = "REF: ${shoppingItem.processResponseItem.internalReference}"
             binding.transactionAmount.text =
                 "$${shoppingItem.processResponseItem.amountItem.total} ${shoppingItem.processResponseItem.amountItem.currency}"
-            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shoppingItem.processItem.instrumentItem.cardItem.number.substring(shoppingItem.processItem.instrumentItem.cardItem.number.length-5, shoppingItem.processItem.instrumentItem.cardItem.number.lastIndex)
+            binding.transactionCard.text = context.getString(R.string.shopping_card_number_hint)+shoppingItem.processItem.instrumentItem.cardItem.number.substring(shoppingItem.processItem.instrumentItem.cardItem.number.length-5, shoppingItem.processItem.instrumentItem.cardItem.number.lastIndex+1)
             binding.transactionStatus.text = shoppingItem.processResponseItem.statusItem.status
             binding.transactionRemove.setOnClickListener {
                 listener(shoppingItem)
