@@ -40,7 +40,10 @@ android {
 dependencies {
     def room_version = "2.4.2"
     def retrofit_version = "2.9.0"
-    
+    def work_version = "2.7.1"
+    def hilt_work = "1.0.0"
+    def lottieVersion = "3.4.0"
+
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
     testImplementation("androidx.room:room-testing:$room_version")
@@ -48,7 +51,13 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation "androidx.hilt:hilt-work:$hilt_work"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    implementation("androidx.work:work-runtime-ktx:$work_version")
+
+
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
