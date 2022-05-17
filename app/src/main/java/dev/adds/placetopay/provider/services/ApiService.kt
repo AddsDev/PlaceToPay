@@ -13,6 +13,8 @@ import dev.adds.placetopay.util.Constants
 import dev.adds.placetopay.util.extension.apiFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.*
 import javax.inject.Inject
 
@@ -32,10 +34,30 @@ class ApiService @Inject constructor(
     suspend fun getProcessResponse(processModel: ProcessModel) : ProcessResponseModel{
         return  withContext(Dispatchers.IO){
             Log.i("RESPONSE_SER", Gson().toJson(processModel))
-            val response = apiGateway.getTransaction(processModel)
-            if(response.code() == 200) return@withContext response.body()!!
-            else return@withContext ProcessResponseModel(StatusModel(Constants.StatusResponse.FAILED.status,response.errorBody()!!.string(),
-                response.message()))
+            val responseTransaction : ProcessResponseModel = ProcessResponseModel(
+                StatusModel(Constants.StatusResponse.FAILED.status, String(),String()),
+                processModel.paymentModel.amountModel)
+            try {
+                val response = apiGateway.getTransaction(processModel)
+                if(response.code() == 200)
+                    return@withContext response.body()!!
+                else
+                    return@withContext responseTransaction
+            }catch (e: SocketTimeoutException){
+                return@withContext responseTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                }
+            }
+            catch(e:  OutOfMemoryError) {
+                return@withContext responseTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                }
+            }
+            catch(e: IOException) {
+                return@withContext responseTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                }
+            }
         }
     }
 }
