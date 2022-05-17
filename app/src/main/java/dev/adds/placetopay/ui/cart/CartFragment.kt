@@ -40,6 +40,9 @@ class CartFragment : Fragment() {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+
+
+
         var productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), productItems) { item ->
             cartViewModel.removeProduct(item)
         }.apply {
@@ -50,13 +53,15 @@ class CartFragment : Fragment() {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = productRecyclerViewAdapter
         }
+        cartViewModel.products.observe(viewLifecycleOwner){ data ->
+            binding.shopNext.isEnabled = data != null && data.isNotEmpty()
+        }
         cartViewModel.total.observe(viewLifecycleOwner) { total ->
             binding.shopTotal.text = getString(R.string.total).let { s: String -> s + total }
         }
         cartViewModel.products.observe(viewLifecycleOwner) { data ->
-            //Refactor -> filter
             productItems.clear()
-            productItems.addAll(data)
+            productItems.addAll(data!!)
             productRecyclerViewAdapter.notifyDataSetChanged()
         }
 
