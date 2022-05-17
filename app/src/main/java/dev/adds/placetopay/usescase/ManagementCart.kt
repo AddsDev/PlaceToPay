@@ -10,13 +10,15 @@ class ManagementCart @Inject constructor(
     private val repository: CartRepository
     ) {
 
-    operator fun invoke(): List<ProductItem>? = repository.getAllProducts().map { it.toDomain() }
+    suspend operator fun invoke(): List<ProductItem> = repository.getAllProductsCart()
 
-    fun addProduct(productItem: ProductItem): Unit = repository.addProduct(productItem.toModel())
+    fun getCart(): List<ProductItem> = repository.getAllProducts()
 
-    fun removeProduct(productItem: ProductItem): Boolean = repository.removeProduct(productItem.toModel())
+    suspend fun addProduct(productItem: ProductItem): Unit = repository.addProduct(productItem)
 
-    fun clean(): Unit = repository.clean()
+    suspend fun removeProduct(productItem: ProductItem): Boolean = repository.removeProduct(productItem)
+
+    suspend fun clean(): Unit = repository.clean()
 
     fun computedTotal(): Float = repository.getTotal()
 

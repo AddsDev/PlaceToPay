@@ -10,10 +10,10 @@ class ManagementPayment @Inject constructor(
     ){
 
 
-    operator fun invoke(): List<ShoppingItem> = repository.getAllPayments()
+    suspend operator fun invoke(): List<ShoppingItem> = repository.getAllPayments()
 
     fun addPayment(shoppingItem: ShoppingItem): Unit = repository.addPayment(shoppingItem)
 
-    fun removePayment(shoppingItem: ShoppingItem): Boolean = repository.removePayment(shoppingItem)
+    suspend fun removePayment(shoppingItem: ShoppingItem): Boolean = repository.removePayment(shoppingItem)
 
 }

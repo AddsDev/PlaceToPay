@@ -14,7 +14,8 @@ class ManagementOrder @Inject constructor(
 
     operator fun invoke(): List<ProcessItem>? = repository.getAllOrders().map { it.toDomain() }
 
-    fun newOrder(payerItem: PayerItem, paymentItem: PaymentItem, cardItem: CardItem): Unit = repository.newOrder(payerItem.toModel(), paymentItem.toModel(), cardItem.toModel())
+    fun newOrder(payerItem: PayerItem, paymentItem: PaymentItem, cardItem: CardItem): Unit =
+        repository.newOrder(payerItem.toModel(), paymentItem.toModel(), cardItem.toModel())
 
     fun getOrder(): ProcessItem = repository.getOrder().toDomain()
 
