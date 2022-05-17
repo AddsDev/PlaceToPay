@@ -1,21 +1,15 @@
 package dev.adds.placetopay.provider.services
 
 import android.util.Log
-import com.google.gson.Gson
-import dev.adds.placetopay.model.domain.AmountModel
 import dev.adds.placetopay.model.domain.ProductModel
-import dev.adds.placetopay.model.domain.payment.ProcessResponseModel
-import dev.adds.placetopay.model.domain.payment.StatusModel
-import dev.adds.placetopay.model.domain.payment.ProcessModel
+import dev.adds.placetopay.model.domain.payment.*
 import dev.adds.placetopay.provider.services.products.IProductService
 import dev.adds.placetopay.provider.services.wallets.IGatewayService
 import dev.adds.placetopay.util.Constants
-import dev.adds.placetopay.util.extension.apiFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.net.SocketTimeoutException
-import java.util.*
 import javax.inject.Inject
 
 class ApiService @Inject constructor(
@@ -33,7 +27,6 @@ class ApiService @Inject constructor(
 
     suspend fun getProcessResponse(processModel: ProcessModel) : ProcessResponseModel{
         return  withContext(Dispatchers.IO){
-            Log.i("RESPONSE_SER", Gson().toJson(processModel))
             val responseTransaction : ProcessResponseModel = ProcessResponseModel(
                 StatusModel(Constants.StatusResponse.FAILED.status, String(),String()),
                 processModel.paymentModel.amountModel)
@@ -56,6 +49,39 @@ class ApiService @Inject constructor(
             catch(e: IOException) {
                 return@withContext responseTransaction.apply {
                     statusModel.status = Constants.StatusResponse.PROCESSING.status
+                }
+            }
+        }
+    }
+    suspend fun getQueryResponse(referenceModel: ReferenceModel) : ReferenceResponseModel{
+        return  withContext(Dispatchers.IO){
+            val infoTransaction : ReferenceResponseModel = ReferenceResponseModel(
+                StatusModel(Constants.StatusResponse.FAILED.status, String(),String())
+            )
+            try {
+                val response = apiGateway.getInfoTransaction(referenceModel)
+                if(response.code() == 200)
+                    return@withContext response.body()!!
+                else{
+                    Log.i(Constants.DEBUG_KEY, response.errorBody()!!.toString())
+                    return@withContext infoTransaction
+                }
+            }catch (e: SocketTimeoutException){
+                return@withContext infoTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                    Log.i(Constants.DEBUG_KEY, e.message!!)
+                }
+            }
+            catch(e:  OutOfMemoryError) {
+                return@withContext infoTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                    Log.i(Constants.DEBUG_KEY, e.message!!)
+                }
+            }
+            catch(e: IOException) {
+                return@withContext infoTransaction.apply {
+                    statusModel.status = Constants.StatusResponse.PROCESSING.status
+                    Log.i(Constants.DEBUG_KEY, e.message!!)
                 }
             }
         }
