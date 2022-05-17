@@ -32,20 +32,20 @@ class CartViewModel @Inject constructor(
     }
     private fun getCart(){
         viewModelScope.launch {
-            productsList.value = managementCart.getCart()
+            productsList.value = managementCart.getAllItems()
             computedTotal()
         }
     }
     fun addProduct(productItem: ProductItem){
         viewModelScope.launch {
-            managementCart.addProduct(productItem)
+            managementCart.addItem(productItem)
             getCart()
         }
     }
 
     fun removeProduct(productItem: ProductItem): Unit {
         viewModelScope.launch {
-            managementCart.removeProduct(productItem)
+            managementCart.removeItem(productItem)
             getCart()
         }
     }

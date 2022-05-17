@@ -5,12 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.adds.placetopay.model.domain.CardModel
-import dev.adds.placetopay.model.domain.PayerModel
-import dev.adds.placetopay.model.domain.PaymentModel
-import dev.adds.placetopay.model.domain.ShoppingModel
-import dev.adds.placetopay.model.domain.payment.ProcessModel
-import dev.adds.placetopay.model.domain.payment.ProcessResponseModel
 import dev.adds.placetopay.usescase.GetProcess
 import dev.adds.placetopay.usescase.ManagementOrder
 import dev.adds.placetopay.usescase.ManagementPayment
@@ -46,22 +40,22 @@ class OrderViewModel @Inject constructor(
     }
 
     fun processOrder(){
-        managementOrder.newOrder(payer_Item_.value!!, payment_Item_.value!!, card_Item_.value!!)
+        managementOrder.addOrder(payer_Item_.value!!, payment_Item_.value!!, card_Item_.value!!)
         viewModelScope.launch {
             itsPaying.postValue(true)
-            val result = getProcess(managementOrder.getOrder())
+            val result = getProcess(managementOrder.getItem())
             if(!result.statusItem.equals(Constants.StatusResponse.FAILED.name)){
                 processResponse_Item_.postValue(result)
 
-                managementPayment.addPayment(ShoppingItem(
-                    managementOrder.getOrder(),result))
+                managementPayment.addItem(ShoppingItem(
+                    managementOrder.getItem(),result))
             }
             itsPaying.postValue(false)
         }
     }
 
     fun getOrder() : ProcessItem {
-        order_.value = managementOrder.getOrder()
+        order_.value = managementOrder.getItem()
         return order_.value!!
     }
 
