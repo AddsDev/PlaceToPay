@@ -1,6 +1,4 @@
-package dev.adds.placetopay.usescase.converts
-
-import dev.adds.placetopay.model.domain.IModel
+package dev.adds.placetopay.usescase.converters
 
 interface IConvertModel<IModel> {
     fun toModel() : dev.adds.placetopay.model.domain.IModel
@@ -8,8 +6,4 @@ interface IConvertModel<IModel> {
 
 interface ICovertDomain<E> {
     fun toDomain() : E
-}
-
-interface ICovertEntity<E> {
-    fun toEntity() : E
 }
