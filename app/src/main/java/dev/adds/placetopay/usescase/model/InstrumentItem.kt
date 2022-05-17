@@ -21,4 +21,4 @@ data class CardItem(var number: String,
 }
 fun InstrumentModel.toDomain() = InstrumentItem(cardModel.toDomain())
 fun CardModel.toDomain() = CardItem(number, expiration, cvv, installments)
-fun CardEntity.toDomain() = CardItem(number, expiration, "", 0)
+fun CardEntity.toDomain() = CardItem(number?: String(), expiration?: String(), "", 0)

@@ -17,6 +17,6 @@ fun ProcessModel.toDomain() = ProcessItem(payerModel.toDomain(),
     instrumentModel.toDomain())
 
 fun TransactionDetailEntity.toProcessDomain() = ProcessItem(payer.toDomain(),
-    PaymentItem(transaction.reference,transaction.provider, amount.toDomain()),
+    PaymentItem(transaction.reference?: String(),transaction.provider?: String(), amount.toDomain()),
     InstrumentItem(card.toDomain())
 )

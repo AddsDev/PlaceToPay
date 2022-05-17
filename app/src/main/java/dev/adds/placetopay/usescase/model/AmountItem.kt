@@ -3,6 +3,7 @@ package dev.adds.placetopay.usescase.model
 import dev.adds.placetopay.model.database.entities.AmountEntity
 import dev.adds.placetopay.model.domain.AmountModel
 import dev.adds.placetopay.usescase.converters.IConvertModel
+import dev.adds.placetopay.util.Constants
 
 
 data class AmountItem(var currency: String,
@@ -11,4 +12,4 @@ data class AmountItem(var currency: String,
 }
 
 fun AmountModel.toDomain() = AmountItem(currency, total)
-fun AmountEntity.toDomain() = AmountItem(currency, total)
+fun AmountEntity.toDomain() = AmountItem(currency?: Constants.Currency.Dollar.currency, total)

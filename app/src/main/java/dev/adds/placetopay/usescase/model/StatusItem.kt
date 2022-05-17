@@ -10,4 +10,4 @@ data class StatusItem(var status: String, var reason: String,
 }
 
 fun StatusModel.toDomain(): StatusItem = StatusItem(status, reason, message, date)
-fun StatusEntity.toDomain(): StatusItem = StatusItem(status, reason, message, date)
+fun StatusEntity.toDomain(): StatusItem = StatusItem(status?: String(), reason?: String(), message?: String(), date?: String())

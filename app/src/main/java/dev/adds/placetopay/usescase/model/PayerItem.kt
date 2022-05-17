@@ -15,4 +15,4 @@ data class PayerItem(var name: String,
 
 fun PayerModel.toDomain() = PayerItem(name, surname, email, documentType, document, mobile)
 
-fun PayerEntity.toDomain() = PayerItem(name, surname, email, documentType, document, mobile)
+fun PayerEntity.toDomain() = PayerItem(name?: String(), surname?: String(), email?: String(), documentType?: String(), document?: String(), mobile?: String())

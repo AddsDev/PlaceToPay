@@ -14,5 +14,5 @@ data class ProcessResponseItem(
         paymentMethod, amountItem.toModel(), authorization)
 }
 
-fun ProcessResponseModel.toDomain() = ProcessResponseItem(statusModel.toDomain(), provider,
-    internalReference, reference, paymentMethod, amountModel.toDomain(), authorization)
+fun ProcessResponseModel.toDomain() = ProcessResponseItem(statusModel.toDomain(), provider?: String(),
+    internalReference, reference?: String(), paymentMethod?: String(), amountModel.toDomain(), authorization)

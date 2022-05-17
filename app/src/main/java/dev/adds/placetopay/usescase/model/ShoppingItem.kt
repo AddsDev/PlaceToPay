@@ -17,15 +17,15 @@ fun ShoppingModel.toDomain() = ShoppingItem(processModel.toDomain(),
 
 fun TransactionDetailEntity.toDomain(): ShoppingItem = ShoppingItem(
     ProcessItem(payer.toDomain(),
-        PaymentItem(transaction.reference,
-            transaction.provider,
+        PaymentItem(transaction.reference?: String(),
+            transaction.provider?: String(),
             amount.toDomain()),
         InstrumentItem(card.toDomain())
     ),
     ProcessResponseItem(status.toDomain(),
-        transaction.provider,
+        transaction.provider?: String(),
         transaction.transactionId,
-        transaction.reference,
+        transaction.reference?: String(),
         String(),
         amount.toDomain(),
         String())
