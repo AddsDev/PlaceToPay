@@ -8,17 +8,29 @@ interface TransactionDao{
     @Query("SELECT * FROM transaction_table")
     suspend fun getAllTransactions(): List<TransactionDetailEntity>
 
-    @Query("SELECT * FROM transaction_table WHERE reference = :reference")
-    suspend fun getTransactionByReference(reference: String): TransactionDetailEntity
+    @Query("SELECT * FROM transaction_table as t "+
+            "JOIN status_transaction_table s ON t.transactionId = s.transactionOwnerId " +
+            "JOIN card_payment_table cd ON t.transactionId = cd.transactionOwnerId " +
+            "JOIN payer_table py ON t.transactionId = py.transactionOwnerId " +
+            "JOIN total_payment_table tot ON t.transactionId = tot.transactionOwnerId " +
+            "WHERE s.status NOT IN('OK','APPROVED','PROCESSING')")
+    suspend fun getAllPendingTransactions(): List<TransactionDetailEntity>?
+
+    @Query("SELECT * FROM transaction_table WHERE internalReference == :internalReference")
+    suspend fun getTransactionByReference(internalReference: Long): TransactionDetailEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(statusEntity: StatusEntity): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(payerEntity: PayerEntity): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(cardEntity: CardEntity): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(amountEntity: AmountEntity): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(transaction: TransactionEntity): Long
 

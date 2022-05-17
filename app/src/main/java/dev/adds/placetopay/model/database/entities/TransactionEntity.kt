@@ -7,4 +7,6 @@ data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     var transactionId: Long = 0,
     var provider: String?,
-    var reference: String?)
+    var reference: String?,
+    @ColumnInfo(index = true)
+    var internalReference: Long?)
