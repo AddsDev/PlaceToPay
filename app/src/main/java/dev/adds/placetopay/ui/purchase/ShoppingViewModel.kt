@@ -23,7 +23,7 @@ class ShoppingViewModel @Inject constructor(
         }
     }
 
-    fun addPayment(shoppingItem: ShoppingItem){
+    suspend fun addPayment(shoppingItem: ShoppingItem){
         managementPayment.addItem(shoppingItem)
         onCreate()
     }
