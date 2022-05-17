@@ -10,7 +10,11 @@ object Constants {
     const val READ_TIME_OUT_API = 15L
     const val CONNECT_TIME_OUT_API = 15L
     const val POOL_TIME_OUT_API = 30L
+    const val TIME_UPDATE_API = 3L
     const val SHOP_DATABASE_NAME = "shop"
+
+
+    const val DEBUG_KEY = "DEBUG_TEST"
 
     enum class StatusResponse(val status: String){
         OK("OK"),
