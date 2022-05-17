@@ -12,6 +12,6 @@ data class ProcessResponseModel(
     @SerializedName("paymentMethod") var paymentMethod: String,
     @SerializedName("amount") var amountModel: AmountModel,
     @SerializedName("authorization") var authorization: String)  : IModel {
-    constructor(statusModel: StatusModel): this(statusModel, String(), 0,
-        String(), String(), AmountModel(String(),0), String())
+    constructor(statusModel: StatusModel, amountModel: AmountModel): this(statusModel, String(), 0,
+        String(), String(), amountModel, String())
 }
