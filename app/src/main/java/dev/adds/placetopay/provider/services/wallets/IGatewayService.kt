@@ -10,10 +10,6 @@ import retrofit2.http.Headers
 
 interface IGatewayService {
 
-    /*@Headers("Content-Type: application/json")
-    @POST("gateway/information")
-    fun getInformation(@Body request: Request?): Call<Response>*/
-
     @Headers("Content-Type: application/json")
     @POST("gateway/process")
     suspend fun getTransaction(@Body processModel: ProcessModel): Response<ProcessResponseModel>
