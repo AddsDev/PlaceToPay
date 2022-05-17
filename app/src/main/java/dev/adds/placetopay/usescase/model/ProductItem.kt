@@ -1,9 +1,7 @@
 package dev.adds.placetopay.usescase.model
 
-import com.google.gson.annotations.SerializedName
-import dev.adds.placetopay.model.domain.IModel
 import dev.adds.placetopay.model.domain.ProductModel
-import dev.adds.placetopay.usescase.converts.IConvertModel
+import dev.adds.placetopay.usescase.converters.IConvertModel
 
 data class ProductItem(var id: Long?,
                   var name: String?,

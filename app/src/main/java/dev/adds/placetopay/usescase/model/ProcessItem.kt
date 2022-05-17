@@ -1,10 +1,9 @@
 package dev.adds.placetopay.usescase.model
 
-import dev.adds.placetopay.model.database.entities.AmountEntity
-import dev.adds.placetopay.model.database.entities.CardEntity
+import dev.adds.placetopay.model.database.entities.TransactionDetailEntity
 import dev.adds.placetopay.model.database.entities.TransactionEntity
 import dev.adds.placetopay.model.domain.payment.ProcessModel
-import dev.adds.placetopay.usescase.converts.IConvertModel
+import dev.adds.placetopay.usescase.converters.IConvertModel
 
 data class ProcessItem(var payerItem: PayerItem, var paymentItem: PaymentItem,
                        var instrumentItem: InstrumentItem): IConvertModel<ProcessModel>{
@@ -17,7 +16,7 @@ fun ProcessModel.toDomain() = ProcessItem(payerModel.toDomain(),
     paymentModel.toDomain(),
     instrumentModel.toDomain())
 
-fun TransactionEntity.toProcessDomain() = ProcessItem(payerEntity.toDomain(),
-    PaymentItem(reference,"", amountEntity.toDomain()),
-    InstrumentItem(cardEntity.toDomain())
+fun TransactionDetailEntity.toProcessDomain() = ProcessItem(payer.toDomain(),
+    PaymentItem(transaction.reference,transaction.provider, amount.toDomain()),
+    InstrumentItem(card.toDomain())
 )

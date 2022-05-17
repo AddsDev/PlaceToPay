@@ -1,7 +1,7 @@
 package dev.adds.placetopay.usescase.model
 
 import dev.adds.placetopay.model.domain.PaymentModel
-import dev.adds.placetopay.usescase.converts.IConvertModel
+import dev.adds.placetopay.usescase.converters.IConvertModel
 
 
 data class PaymentItem(var reference: String,
