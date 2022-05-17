@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "card_payment_table")
 data class CardEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") var id: Long,
-    @ColumnInfo(name = "number") var number: String,
-    @ColumnInfo(name = "expiration") var expiration: String) {
-}
+    var cardId: Long = 0,
+    var number: String,
+    var expiration: String,
+    val transactionOwnerId: Long)

@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "payer_table")
 data class PayerEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") var id : Long,
-    @ColumnInfo(name = "name")var name: String,
-    @ColumnInfo(name = "surname") var surname : String,
-    @ColumnInfo(name = "email") var email: String,
-    @ColumnInfo(name = "documentType") var documentType: String,
-    @ColumnInfo(name = "document")var document: String,
-    @ColumnInfo(name = "mobile") var mobile: String) {
+    var payerId : Long = 0,
+    var name: String,
+    var surname : String,
+    var email: String,
+    var documentType: String,
+    var document: String,
+    var mobile: String, val transactionOwnerId: Long) {
 }

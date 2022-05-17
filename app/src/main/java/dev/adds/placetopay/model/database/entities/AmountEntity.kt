@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "total_payment_table")
 data class AmountEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") var id: Long,
-    @ColumnInfo(name = "currency") var currency: String,
-    @ColumnInfo(name = "total") var total: Int) {
-}
+    var amountId: Long = 0,
+    var currency: String,
+    var total: Int,
+    val transactionOwnerId: Long)

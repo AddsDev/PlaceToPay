@@ -7,7 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "status_transaction_table")
 data class StatusEntity(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id") var id: Long,
-    @ColumnInfo(name = "status") var status: String, @ColumnInfo(name = "reason") var reason: String,
-    @ColumnInfo(name = "message") var message: String, @ColumnInfo(name = "date") var date: String) {
+    var statusId: Long = 0,
+    var status: String,
+    var reason: String,
+    var message: String,
+    var date: String,
+    val transactionOwnerId: Long) {
 }
