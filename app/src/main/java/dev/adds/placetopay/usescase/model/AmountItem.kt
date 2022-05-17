@@ -12,4 +12,4 @@ data class AmountItem(var currency: String,
 }
 
 fun AmountModel.toDomain() = AmountItem(currency, total)
-fun AmountEntity.toDomain() = AmountItem(currency?: Constants.Currency.Dollar.currency, total)
+fun AmountEntity.toDomain() = AmountItem(currency?: Constants.Currency.USD.currency, total)

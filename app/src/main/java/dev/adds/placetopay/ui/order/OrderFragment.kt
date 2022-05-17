@@ -14,10 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
 import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentOrderBinding
-import dev.adds.placetopay.model.domain.AmountModel
-import dev.adds.placetopay.model.domain.CardModel
-import dev.adds.placetopay.model.domain.PayerModel
-import dev.adds.placetopay.model.domain.PaymentModel
 import dev.adds.placetopay.ui.cart.CartViewModel
 import dev.adds.placetopay.usescase.model.AmountItem
 import dev.adds.placetopay.usescase.model.CardItem
@@ -72,7 +68,7 @@ class OrderFragment : Fragment() {
 
             val paymentItem = PaymentItem(binding.orderDocument.text.toString(),
                 Date().apiFormat(),
-                AmountItem(Constants.Currency.Dollar.currency, cartViewModel.total.value!!.toInt())
+                AmountItem(Constants.Currency.USD.currency, cartViewModel.total.value!!.toInt())
             )
 
 
@@ -85,7 +81,6 @@ class OrderFragment : Fragment() {
     }
 
     private fun startTransaction() {
-        //Pay
         orderViewModel.processOrder()
         cartViewModel.clean()
         binding.nestedScrollView.isEnabled = false
