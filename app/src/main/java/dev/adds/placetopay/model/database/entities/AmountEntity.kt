@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class AmountEntity(
     @PrimaryKey(autoGenerate = true)
     var amountId: Long = 0,
-    var currency: String,
+    var currency: String?,
     var total: Int,
     val transactionOwnerId: Long)

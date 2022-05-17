@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 data class PayerEntity(
     @PrimaryKey(autoGenerate = true)
     var payerId : Long = 0,
-    var name: String,
-    var surname : String,
-    var email: String,
-    var documentType: String,
-    var document: String,
-    var mobile: String, val transactionOwnerId: Long) {
+    var name: String?,
+    var surname : String?,
+    var email: String?,
+    var documentType: String?,
+    var document: String?,
+    var mobile: String?, val transactionOwnerId: Long) {
 }

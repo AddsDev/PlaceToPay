@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 data class StatusEntity(
     @PrimaryKey(autoGenerate = true)
     var statusId: Long = 0,
-    var status: String,
-    var reason: String,
-    var message: String,
-    var date: String,
+    var status: String?,
+    var reason: String?,
+    var message: String?,
+    var date: String?,
     val transactionOwnerId: Long) {
 }

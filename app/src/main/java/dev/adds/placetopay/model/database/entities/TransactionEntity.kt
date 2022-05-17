@@ -6,5 +6,5 @@ import androidx.room.*
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     var transactionId: Long = 0,
-    var provider: String,
-    var reference: String)
+    var provider: String?,
+    var reference: String?)

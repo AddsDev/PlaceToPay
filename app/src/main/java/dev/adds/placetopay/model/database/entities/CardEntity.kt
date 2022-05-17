@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class CardEntity(
     @PrimaryKey(autoGenerate = true)
     var cardId: Long = 0,
-    var number: String,
-    var expiration: String,
+    var number: String?,
+    var expiration: String?,
     val transactionOwnerId: Long)
