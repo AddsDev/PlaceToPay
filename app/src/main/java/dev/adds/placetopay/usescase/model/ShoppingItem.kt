@@ -24,7 +24,7 @@ fun TransactionDetailEntity.toDomain(): ShoppingItem = ShoppingItem(
     ),
     ProcessResponseItem(status.toDomain(),
         transaction.provider?: String(),
-        transaction.transactionId,
+        transaction.internalReference!!,
         transaction.reference?: String(),
         String(),
         amount.toDomain(),

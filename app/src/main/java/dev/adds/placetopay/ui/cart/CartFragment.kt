@@ -54,7 +54,10 @@ class CartFragment : Fragment() {
             adapter = productRecyclerViewAdapter
         }
         cartViewModel.products.observe(viewLifecycleOwner){ data ->
-            binding.shopNext.isEnabled = data != null && data.isNotEmpty()
+            if (data != null) {
+                binding.shopItems.text = getString(R.string.items).let { s: String-> s+ data.size }
+                binding.shopNext.isEnabled = data.isNotEmpty()
+            }
         }
         cartViewModel.total.observe(viewLifecycleOwner) { total ->
             binding.shopTotal.text = getString(R.string.total).let { s: String -> s + total }

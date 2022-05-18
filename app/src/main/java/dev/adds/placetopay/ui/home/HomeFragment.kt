@@ -5,12 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.WithFragmentBindings
+import dev.adds.placetopay.R
 import dev.adds.placetopay.databinding.FragmentHomeBinding
 import dev.adds.placetopay.ui.cart.CartViewModel
 import dev.adds.placetopay.ui.common.row.ProductRecyclerViewAdapter
@@ -45,6 +47,8 @@ class HomeFragment : Fragment() {
 
         val productRecyclerViewAdapter = ProductRecyclerViewAdapter(requireContext(), productItems) { item ->
             cartViewModel.addProduct(item)
+            Toast.makeText(requireContext(), getString(R.string.home_add_produt) + item.name,
+                Toast.LENGTH_SHORT).show()
         }
 
         binding.homeRecyclerProducts.apply {
