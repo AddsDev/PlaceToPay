@@ -19,7 +19,10 @@ object Constants {
     enum class StatusResponse(val status: String){
         OK("OK"),
         FAILED("FAILED CONNECT"),
-        PROCESSING("PROCESSING")
+        PROCESSING("PROCESSING"),
+        PENDING("PENDING"),
+        PENDING_VALIDATION("PENDING_VALIDATION"),
+        PENDING_PROCESS("PENDING_PROCESS")
     }
 
     enum class Currency(val currency: String){
