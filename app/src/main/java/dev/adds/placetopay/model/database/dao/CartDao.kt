@@ -5,7 +5,7 @@ import dev.adds.placetopay.model.database.entities.CartEntity
 
 @Dao
 interface CartDao {
-    @Query("SELECT * FROM cart_table")
+    @Query("SELECT * FROM cart_table ORDER BY id DESC")
     suspend fun getAllProducts(): List<CartEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
