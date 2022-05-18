@@ -12,10 +12,12 @@
 
     <!-- Home -->
     <string name="title_home">Home</string>
+    <string name="home.add_produt">Se agrego &#160;</string>
     <!-- Shopping Cart -->
     <string name="title_cart">Cart</string>
     <string name="title_cart.title">Tu carrito de compras 🛍️</string>
     <string name="total">Total: $</string>
+    <string name="items">Items: #&#160;</string>
     <string name="order.title">Informacion de Pago</string>
     <string name="order.title.user">Informacion del Usuario</string>
     <string name="order.title.card">Foma de pago</string>
